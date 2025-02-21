@@ -23,6 +23,10 @@
 - [Ktor](https://ktor.io/): Constructs REST APIs and facilitates network requests.
 - [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization): Kotlin multiplatform / multi-format reflectionless serialization.
 
+## API
+Crypto Traker using [Coincap](https://docs.coincap.io/) for constructing RESTful API.<br>
+Coincap provides a RESTful API interface to crypto coins and corresponding price history.
+
 ## Screenshots
 <p>  
   Smartphone
@@ -30,8 +34,9 @@
 <img src="https://github.com/user-attachments/assets/a464270b-4abc-4a85-adef-36ce8cb5a42c" width="45%"/>
 <img src="https://github.com/user-attachments/assets/673e15eb-df7f-4ec2-97df-0dab337c43d3" width="45%"/>
 
+
 <p>  
-Tablet
+  Tablet
 </p>
 <img src="https://github.com/user-attachments/assets/4742eefb-18e0-47cf-9cab-3c7a5ab787ae"/>
 
