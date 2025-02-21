@@ -16,9 +16,6 @@
   - Jetpack Compose: Android’s modern toolkit for declarative UI development.
   - Lifecycle: Observes Android lifecycles and manages UI states upon lifecycle changes.
   - ViewModel: Manages UI-related data and is lifecycle-aware, ensuring data survival through configuration changes.
-- Architecture:
-  - MVI Architecture (View - ViewModel - Intent): Facilitates separation of concerns and promotes maintainability.
-  - Data Source Pattern: Acts as a mediator between different data sources and the application's business logic.
 - [Koin](https://insert-koin.io/): Facilitates dependency injection.
 - [Ktor](https://ktor.io/): Constructs REST APIs and facilitates network requests.
 - [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization): Kotlin multiplatform / multi-format reflectionless serialization.
