@@ -37,5 +37,12 @@ Coincap provides a RESTful API interface to crypto coins and corresponding price
 </p>
 <img src="https://github.com/user-attachments/assets/4742eefb-18e0-47cf-9cab-3c7a5ab787ae"/>
 
+## Architecture
+- MVI (Model-View-Intent)
+- Clean Architecture 
+
+<img src="https://github.com/user-attachments/assets/ab055255-ea96-406a-82b9-69033a61c4e7" width="45%"/>
+
+
 
 
