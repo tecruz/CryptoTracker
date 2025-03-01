@@ -7,6 +7,8 @@
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://github.com/tecruz/CryptoTracker/actions/workflows/android.yml"><img alt="Build" src="https://github.com/tecruz/VisitedCountries/actions/workflows/android.yml/badge.svg"/></a>
+  <a href="https://codecov.io/gh/tecruz/CryptoTracker"><img src="https://codecov.io/gh/tecruz/CryptoTracker/graph/badge.svg?token=7vB8MLLmd9"/> 
+ </a>
 </p>
 
 ## Tech stack & Open-source libraries
