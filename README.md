@@ -18,9 +18,14 @@
   - Jetpack Compose: Android’s modern toolkit for declarative UI development.
   - Lifecycle: Observes Android lifecycles and manages UI states upon lifecycle changes.
   - ViewModel: Manages UI-related data and is lifecycle-aware, ensuring data survival through configuration changes.
+  - Junit & Compose UI tests
 - [Koin](https://insert-koin.io/): Facilitates dependency injection.
 - [Ktor](https://ktor.io/): Constructs REST APIs and facilitates network requests.
 - [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization): Kotlin multiplatform / multi-format reflectionless serialization.
+- [Turbine](https://github.com/cashapp/turbine): Small testing library for kotlinx.coroutines.
+- [AssertK](https://github.com/willowtreeapps/assertk): Fluent assertion library for Kotlin.
+- [Detekt](https://github.com/detekt/detekt): Code static analyzer.
+- [Spotless](https://github.com/diffplug/spotless): Code formatter and lint.
 
 ## API
 Crypto Traker using [Coincap](https://docs.coincap.io/) for constructing RESTful API.<br>
