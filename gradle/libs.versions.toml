@@ -16,7 +16,7 @@ compose-material-icons-extended = "1.7.8"
 kover = "0.9.1"
 spotless = "7.0.2"
 turbine = "1.2.0"
-assertK = "0.26.1"
+assertK = "0.28.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
