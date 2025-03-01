@@ -1,3 +1,19 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.plcoding.cryptotracker.crypto.presentation.coin_detail
 
 import androidx.compose.foundation.Canvas
@@ -44,10 +60,10 @@ fun LineChart(
     selectedDataPoint: DataPoint? = null,
     onSelectedDataPoint: (DataPoint) -> Unit = {},
     onXLabelWidthChange: (Float) -> Unit = {},
-    showHelperLines: Boolean = true
+    showHelperLines: Boolean = true,
 ) {
     val textStyle = LocalTextStyle.current.copy(
-        fontSize = style.labelFontSize
+        fontSize = style.labelFontSize,
     )
 
     val visibleDataPoints = remember(dataPoints, visibleDataPointsIndices) {
@@ -88,16 +104,16 @@ fun LineChart(
                     val newSelectedDataPointIndex = getSelectedDataPointIndex(
                         touchOffsetX = change.position.x,
                         triggerWidth = xLabelWidth,
-                        drawPoints = drawPoints
+                        drawPoints = drawPoints,
                     )
                     isShowingDataPoints =
                         (newSelectedDataPointIndex + visibleDataPointsIndices.first) in
-                                visibleDataPointsIndices
-                    if(isShowingDataPoints) {
+                        visibleDataPointsIndices
+                    if (isShowingDataPoints) {
                         onSelectedDataPoint(dataPoints[newSelectedDataPointIndex])
                     }
                 }
-            }
+            },
     ) {
         val minLabelSpacingYPx = style.minYLabelSpacing.toPx()
         val verticalPaddingPx = style.verticalPadding.toPx()
@@ -107,19 +123,23 @@ fun LineChart(
         val xLabelTextLayoutResults = visibleDataPoints.map {
             measurer.measure(
                 text = it.xLabel,
-                style = textStyle.copy(textAlign = TextAlign.Center)
+                style = textStyle.copy(textAlign = TextAlign.Center),
             )
         }
         val maxXLabelWidth = xLabelTextLayoutResults.maxOfOrNull { it.size.width } ?: 0
         val maxXLabelHeight = xLabelTextLayoutResults.maxOfOrNull { it.size.height } ?: 0
         val maxXLabelLineCount = xLabelTextLayoutResults.maxOfOrNull { it.lineCount } ?: 0
-        val xLabelLineHeight = if(maxXLabelLineCount > 0) {
+        val xLabelLineHeight = if (maxXLabelLineCount > 0) {
             maxXLabelHeight / maxXLabelLineCount
-        } else 0
+        } else {
+            0
+        }
 
         val viewPortHeightPx = size.height -
-                (maxXLabelHeight + 2 * verticalPaddingPx
-                        + xLabelLineHeight + xAxisLabelSpacingPx)
+            (
+                maxXLabelHeight + 2 * verticalPaddingPx +
+                    xLabelLineHeight + xAxisLabelSpacingPx
+                )
 
         // Y-LABEL CALCULATION
         val labelViewPortHeightPx = viewPortHeightPx + xLabelLineHeight
@@ -131,14 +151,14 @@ fun LineChart(
         val yLabels = (0..labelCountExcludingLastLabel).map {
             ValueLabel(
                 value = maxYValue - (valueIncrement * it),
-                unit = unit
+                unit = unit,
             )
         }
 
         val yLabelTextLayoutResults = yLabels.map {
             measurer.measure(
                 text = it.formatted(),
-                style = textStyle
+                style = textStyle,
             )
         }
         val maxYLabelWidth = yLabelTextLayoutResults.maxOfOrNull { it.size.width } ?: 0
@@ -151,99 +171,105 @@ fun LineChart(
         xLabelWidth = maxXLabelWidth + xAxisLabelSpacingPx
         xLabelTextLayoutResults.forEachIndexed { index, result ->
             val x = viewPortLeftX + xAxisLabelSpacingPx / 2f +
-                    xLabelWidth * index
+                xLabelWidth * index
             drawText(
                 textLayoutResult = result,
                 topLeft = Offset(
                     x = x,
-                    y = viewPortBottomY + xAxisLabelSpacingPx
+                    y = viewPortBottomY + xAxisLabelSpacingPx,
                 ),
-                color = if(index == selectedDataPointIndex) {
+                color = if (index == selectedDataPointIndex) {
                     style.selectedColor
-                } else style.unselectedColor
+                } else {
+                    style.unselectedColor
+                },
             )
 
-            if(showHelperLines) {
+            if (showHelperLines) {
                 drawLine(
-                    color = if(selectedDataPointIndex == index) {
+                    color = if (selectedDataPointIndex == index) {
                         style.selectedColor
-                    } else style.unselectedColor,
+                    } else {
+                        style.unselectedColor
+                    },
                     start = Offset(
                         x = x + result.size.width / 2f,
-                        y = viewPortBottomY
+                        y = viewPortBottomY,
                     ),
                     end = Offset(
                         x = x + result.size.width / 2f,
-                        y = viewPortTopY
+                        y = viewPortTopY,
                     ),
-                    strokeWidth = if(selectedDataPointIndex == index) {
+                    strokeWidth = if (selectedDataPointIndex == index) {
                         style.helperLinesThicknessPx * 1.8f
-                    } else style.helperLinesThicknessPx
+                    } else {
+                        style.helperLinesThicknessPx
+                    },
                 )
             }
 
-            if(selectedDataPointIndex == index) {
+            if (selectedDataPointIndex == index) {
                 val valueLabel = ValueLabel(
                     value = visibleDataPoints[index].y,
-                    unit = unit
+                    unit = unit,
                 )
                 val valueResult = measurer.measure(
                     text = valueLabel.formatted(),
                     style = textStyle.copy(
-                        color = style.selectedColor
+                        color = style.selectedColor,
                     ),
-                    maxLines = 1
+                    maxLines = 1,
                 )
-                val textPositionX = if(selectedDataPointIndex == visibleDataPointsIndices.last) {
+                val textPositionX = if (selectedDataPointIndex == visibleDataPointsIndices.last) {
                     x - valueResult.size.width
                 } else {
                     x - valueResult.size.width / 2f
                 } + result.size.width / 2f
                 val isTextInVisibleRange =
                     (size.width - textPositionX).roundToInt() in 0..size.width.roundToInt()
-                if(isTextInVisibleRange) {
+                if (isTextInVisibleRange) {
                     drawText(
                         textLayoutResult = valueResult,
                         topLeft = Offset(
                             x = textPositionX,
-                            y = viewPortTopY - valueResult.size.height - 10f
-                        )
+                            y = viewPortTopY - valueResult.size.height - 10f,
+                        ),
                     )
                 }
             }
         }
 
         val heightRequiredForLabels = xLabelLineHeight *
-                (labelCountExcludingLastLabel + 1)
+            (labelCountExcludingLastLabel + 1)
         val remainingHeightForLabels = labelViewPortHeightPx - heightRequiredForLabels
         val spaceBetweenLabels = remainingHeightForLabels / labelCountExcludingLastLabel
 
         yLabelTextLayoutResults.forEachIndexed { index, result ->
             val x = horizontalPaddingPx + maxYLabelWidth - result.size.width.toFloat()
             val y = viewPortTopY +
-                    index * (xLabelLineHeight + spaceBetweenLabels) -
-                    xLabelLineHeight / 2f
+                index * (xLabelLineHeight + spaceBetweenLabels) -
+                xLabelLineHeight / 2f
             drawText(
                 textLayoutResult = result,
                 topLeft = Offset(
                     x = x,
-                    y = y
+                    y = y,
                 ),
-                color = style.unselectedColor
+                color = style.unselectedColor,
             )
 
-            if(showHelperLines) {
+            if (showHelperLines) {
                 drawLine(
                     color = style.unselectedColor,
                     start = Offset(
                         x = viewPortLeftX,
-                        y = y + result.size.height.toFloat() / 2f
+                        y = y + result.size.height.toFloat() / 2f,
                     ),
                     end = Offset(
                         x = viewPortRightX,
-                        y = y + result.size.height.toFloat() / 2f
+                        y = y + result.size.height.toFloat() / 2f,
                     ),
-                    strokeWidth = style.helperLinesThicknessPx
+                    strokeWidth = style.helperLinesThicknessPx,
                 )
             }
         }
@@ -251,20 +277,20 @@ fun LineChart(
         // visibleDataPointsIndices = 5..20
         drawPoints = visibleDataPointsIndices.map {
             val x = viewPortLeftX + (it - visibleDataPointsIndices.first) *
-                    xLabelWidth + xLabelWidth / 2f
+                xLabelWidth + xLabelWidth / 2f
             // [minYValue; maxYValue] -> [0; 1]
             val ratio = (dataPoints[it].y - minYValue) / (maxYValue - minYValue)
             val y = viewPortBottomY - (ratio * viewPortHeightPx)
             DataPoint(
                 x = x,
                 y = y,
-                xLabel = dataPoints[it].xLabel
+                xLabel = dataPoints[it].xLabel,
             )
         }
 
         val conPoints1 = mutableListOf<DataPoint>()
         val conPoints2 = mutableListOf<DataPoint>()
-        for(i in 1 until drawPoints.size) {
+        for (i in 1 until drawPoints.size) {
             val p0 = drawPoints[i - 1]
             val p1 = drawPoints[i]
 
@@ -277,17 +303,17 @@ fun LineChart(
         }
 
         val linePath = Path().apply {
-            if(drawPoints.isNotEmpty()) {
+            if (drawPoints.isNotEmpty()) {
                 moveTo(drawPoints.first().x, drawPoints.first().y)
 
-                for(i in 1 until drawPoints.size) {
+                for (i in 1 until drawPoints.size) {
                     cubicTo(
                         x1 = conPoints1[i - 1].x,
                         y1 = conPoints1[i - 1].y,
                         x2 = conPoints2[i - 1].x,
                         y2 = conPoints2[i - 1].y,
                         x3 = drawPoints[i].x,
-                        y3 = drawPoints[i].y
+                        y3 = drawPoints[i].y,
                     )
                 }
             }
@@ -297,35 +323,35 @@ fun LineChart(
             color = style.chartLineColor,
             style = Stroke(
                 width = 5f,
-                cap = StrokeCap.Round
-            )
+                cap = StrokeCap.Round,
+            ),
         )
 
         drawPoints.forEachIndexed { index, point ->
-            if(isShowingDataPoints) {
+            if (isShowingDataPoints) {
                 val circleOffset = Offset(
                     x = point.x,
-                    y = point.y
+                    y = point.y,
                 )
                 drawCircle(
                     color = style.selectedColor,
                     radius = 10f,
-                    center = circleOffset
+                    center = circleOffset,
                 )
 
-                if(selectedDataPointIndex == index) {
+                if (selectedDataPointIndex == index) {
                     drawCircle(
                         color = Color.White,
                         radius = 15f,
-                        center = circleOffset
+                        center = circleOffset,
                     )
                     drawCircle(
                         color = style.selectedColor,
                         radius = 15f,
                         center = circleOffset,
                         style = Stroke(
-                            width = 3f
-                        )
+                            width = 3f,
+                        ),
                     )
                 }
             }
@@ -333,11 +359,7 @@ fun LineChart(
     }
 }
 
-private fun getSelectedDataPointIndex(
-    touchOffsetX: Float,
-    triggerWidth: Float,
-    drawPoints: List<DataPoint>
-): Int {
+private fun getSelectedDataPointIndex(touchOffsetX: Float, triggerWidth: Float, drawPoints: List<DataPoint>): Int {
     val triggerRangeLeft = touchOffsetX - triggerWidth / 2f
     val triggerRangeRight = touchOffsetX + triggerWidth / 2f
     return drawPoints.indexOfFirst {
@@ -353,7 +375,7 @@ private fun LineChartPreview() {
             (1..20).map {
                 CoinPrice(
                     priceUsd = Random.nextFloat() * 1000.0,
-                    dateTime = ZonedDateTime.now().plusHours(it.toLong())
+                    dateTime = ZonedDateTime.now().plusHours(it.toLong()),
                 )
             }
         }
@@ -367,7 +389,7 @@ private fun LineChartPreview() {
             minYLabelSpacing = 25.dp,
             verticalPadding = 8.dp,
             horizontalPadding = 8.dp,
-            xAxisLabelSpacing = 8.dp
+            xAxisLabelSpacing = 8.dp,
         )
         val dataPoints = remember {
             coinHistoryRandomized.map {
@@ -376,7 +398,7 @@ private fun LineChartPreview() {
                     y = it.priceUsd.toFloat(),
                     xLabel = DateTimeFormatter
                         .ofPattern("ha\nM/d")
-                        .format(it.dateTime)
+                        .format(it.dateTime),
                 )
             }
         }
@@ -389,7 +411,7 @@ private fun LineChartPreview() {
                 .width(700.dp)
                 .height(300.dp)
                 .background(Color.White),
-            selectedDataPoint = dataPoints[1]
+            selectedDataPoint = dataPoints[1],
         )
     }
 }

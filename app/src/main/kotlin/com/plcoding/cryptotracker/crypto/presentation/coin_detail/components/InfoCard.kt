@@ -1,3 +1,19 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.plcoding.cryptotracker.crypto.presentation.coin_detail.components
 
 import androidx.compose.animation.AnimatedContent
@@ -39,7 +55,7 @@ fun InfoCard(
     val defaultTextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
         fontSize = 18.sp,
-        color = contentColor
+        color = contentColor,
     )
     Card(
         modifier = modifier
@@ -53,19 +69,19 @@ fun InfoCard(
         shape = RectangleShape,
         border = BorderStroke(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            contentColor = contentColor
-        )
+            contentColor = contentColor,
+        ),
     ) {
         AnimatedContent(
             targetState = icon,
             modifier = Modifier.align(
-                Alignment.CenterHorizontally
+                Alignment.CenterHorizontally,
             ),
-            label = "IconAnimation"
+            label = "IconAnimation",
         ) { icon ->
             Icon(
                 imageVector = icon,
@@ -73,22 +89,22 @@ fun InfoCard(
                 modifier = Modifier
                     .size(75.dp)
                     .padding(top = 16.dp),
-                tint = contentColor
+                tint = contentColor,
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         AnimatedContent(
             targetState = formattedText,
             modifier = Modifier.align(
-                Alignment.CenterHorizontally
+                Alignment.CenterHorizontally,
             ),
-            label = "ValueAnimation"
+            label = "ValueAnimation",
         ) { formattedText ->
             Text(
                 text = formattedText,
                 style = defaultTextStyle,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp),
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -101,7 +117,7 @@ fun InfoCard(
                 .padding(bottom = 16.dp),
             fontSize = 12.sp,
             fontWeight = FontWeight.Light,
-            color = contentColor
+            color = contentColor,
         )
     }
 }
@@ -113,7 +129,7 @@ private fun InfoCardPreview() {
         InfoCard(
             title = "Price",
             formattedText = "$ 63,157.44",
-            icon = ImageVector.vectorResource(id = R.drawable.dollar)
+            icon = ImageVector.vectorResource(id = R.drawable.dollar),
         )
     }
 }

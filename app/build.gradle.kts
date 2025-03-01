@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kover)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.detekt)
 }
 
 
@@ -58,8 +61,39 @@ android {
 }
 
 spotless {
+    val buildDirectory = layout.buildDirectory.asFileTree
     kotlin {
-        ktlint()
+        target("**/*.kt")
+        targetExclude(buildDirectory)
+        ktlint().editorConfigOverride(
+            mapOf(
+                "indent_size" to "4",
+                "continuation_indent_size" to "4",
+                "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+                "ktlint_standard_filename" to "disabled",
+                "ktlint_standard_package-name" to "disabled"
+            )
+        )
+        licenseHeaderFile(rootProject.file("spotless/spotless.license.kt"))
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format("kts") {
+        target("**/*.kts")
+        targetExclude(buildDirectory)
+        licenseHeaderFile(rootProject.file("spotless/spotless.license.kt"), "(^(?![\\/ ]\\*).*$)")
+    }
+    format("xml") {
+        target("**/*.xml")
+        targetExclude(buildDirectory)
+        licenseHeaderFile(rootProject.file("spotless/spotless.license.xml"), "(<[^!?])")
+    }
+}
+
+// Kotlin DSL
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
     }
 }
 

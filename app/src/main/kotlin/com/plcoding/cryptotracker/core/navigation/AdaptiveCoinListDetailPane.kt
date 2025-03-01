@@ -1,3 +1,18 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 @file:OptIn(ExperimentalMaterial3AdaptiveApi::class)
 
@@ -24,19 +39,16 @@ import com.plcoding.cryptotracker.crypto.presentation.coin_list.CoinListViewMode
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AdaptiveCoinListDetailPane(
-    modifier: Modifier = Modifier,
-    viewModel: CoinListViewModel = koinViewModel()
-) {
+fun AdaptiveCoinListDetailPane(modifier: Modifier = Modifier, viewModel: CoinListViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     ObserveAsEvents(events = viewModel.events) { event ->
-        when(event) {
+        when (event) {
             is CoinListEvent.Error -> {
                 Toast.makeText(
                     context,
                     event.error.toString(context),
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             }
         }
@@ -51,14 +63,14 @@ fun AdaptiveCoinListDetailPane(
                     state = state,
                     onAction = { action ->
                         viewModel.onAction(action)
-                        when(action) {
+                        when (action) {
                             is CoinListAction.OnCoinClick -> {
                                 navigator.navigateTo(
-                                    pane = ListDetailPaneScaffoldRole.Detail
+                                    pane = ListDetailPaneScaffoldRole.Detail,
                                 )
                             }
                         }
-                    }
+                    },
                 )
             }
         },
@@ -67,6 +79,6 @@ fun AdaptiveCoinListDetailPane(
                 CoinDetailScreen(state = state)
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

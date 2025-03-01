@@ -1,3 +1,19 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.plcoding.cryptotracker.di
 
 import com.plcoding.cryptotracker.core.data.networking.HttpClientFactory
@@ -5,14 +21,15 @@ import com.plcoding.cryptotracker.crypto.data.networking.RemoteCoinDataSource
 import com.plcoding.cryptotracker.crypto.domain.CoinDataSource
 import com.plcoding.cryptotracker.crypto.presentation.coin_list.CoinListViewModel
 import io.ktor.client.engine.cio.CIO
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val appModule = module {
-    single { HttpClientFactory.create(CIO.create()) }
-    singleOf(::RemoteCoinDataSource).bind<CoinDataSource>()
+val appModule =
+    module {
+        single { HttpClientFactory.create(CIO.create()) }
+        singleOf(::RemoteCoinDataSource).bind<CoinDataSource>()
 
-    viewModelOf(::CoinListViewModel)
-}
+        viewModelOf(::CoinListViewModel)
+    }

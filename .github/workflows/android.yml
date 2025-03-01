@@ -22,8 +22,11 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Build
+      - name: Build & Spotless with KtLint
         run: ./gradlew build
+
+      - name: Detekt
+        run: ./gradlew detekt
 
       - name: Run tests
         run: ./gradlew app:koverXmlReport

@@ -1,3 +1,19 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.plcoding.cryptotracker.crypto.presentation.coin_list.components
 
 import androidx.compose.foundation.background
@@ -25,16 +41,13 @@ import com.plcoding.cryptotracker.ui.theme.CryptoTrackerTheme
 import com.plcoding.cryptotracker.ui.theme.greenBackground
 
 @Composable
-fun PriceChange(
-    change: DisplayableNumber,
-    modifier: Modifier = Modifier
-) {
-    val contentColor = if(change.value < 0.0){
+fun PriceChange(change: DisplayableNumber, modifier: Modifier = Modifier) {
+    val contentColor = if (change.value < 0.0) {
         MaterialTheme.colorScheme.onErrorContainer
     } else {
         Color.Green
     }
-    val backgroundColor = if(change.value < 0.0){
+    val backgroundColor = if (change.value < 0.0) {
         MaterialTheme.colorScheme.errorContainer
     } else {
         greenBackground
@@ -45,7 +58,7 @@ fun PriceChange(
             .clip(RoundedCornerShape(100f))
             .background(backgroundColor)
             .padding(horizontal = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = if (change.value < 0.0) {
@@ -55,26 +68,26 @@ fun PriceChange(
             },
             tint = contentColor,
             contentDescription = null,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(20.dp),
         )
         Text(
             text = " ${change.formatted} %",
             color = contentColor,
             fontSize = 14.sp,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
         )
     }
 }
 
 @PreviewLightDark
 @Composable
-private fun PriceChangePreview(){
+private fun PriceChangePreview() {
     CryptoTrackerTheme {
         PriceChange(
             change = DisplayableNumber(
                 value = 2.43,
-                formatted = "2.43"
-            )
+                formatted = "2.43",
+            ),
         )
     }
 }

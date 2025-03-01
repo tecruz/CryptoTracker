@@ -1,3 +1,19 @@
+/*
+ * Designed and developed by 2025 tecruz
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.plcoding.cryptotracker.crypto.presentation.coin_list
 
 import androidx.lifecycle.ViewModel
@@ -19,9 +35,7 @@ import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class CoinListViewModel(
-    private val coinDataSource: CoinDataSource
-) : ViewModel() {
+class CoinListViewModel(private val coinDataSource: CoinDataSource) : ViewModel() {
 
     private val _state = MutableStateFlow(CoinListState())
     val state = _state
@@ -29,7 +43,7 @@ class CoinListViewModel(
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            CoinListState()
+            CoinListState(),
         )
 
     private val _events = Channel<CoinListEvent>()
@@ -50,8 +64,8 @@ class CoinListViewModel(
             coinDataSource
                 .getCoinHistory(
                     coinId = coinUi.id,
-                    start = ZonedDateTime.now().minusDays(5),
-                    end = ZonedDateTime.now()
+                    start = ZonedDateTime.now().minusDays(COIN_HISTORY_START_OFFSET),
+                    end = ZonedDateTime.now(),
                 )
                 .onSuccess { history ->
                     val dataPoints = history
@@ -62,15 +76,15 @@ class CoinListViewModel(
                                 y = it.priceUsd.toFloat(),
                                 xLabel = DateTimeFormatter
                                     .ofPattern("ha\nM/d")
-                                    .format(it.dateTime)
+                                    .format(it.dateTime),
                             )
                         }
 
                     _state.update {
                         it.copy(
                             selectedCoin = it.selectedCoin?.copy(
-                                coinPriceHistory = dataPoints
-                            )
+                                coinPriceHistory = dataPoints,
+                            ),
                         )
                     }
                 }
@@ -84,7 +98,7 @@ class CoinListViewModel(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    isLoading = true
+                    isLoading = true,
                 )
             }
 
@@ -94,7 +108,7 @@ class CoinListViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            coins = coins.map { it.toCoinUI() }
+                            coins = coins.map { it.toCoinUI() },
                         )
                     }
                 }
@@ -103,5 +117,9 @@ class CoinListViewModel(
                     _events.send(CoinListEvent.Error(error))
                 }
         }
+    }
+
+    companion object {
+        const val COIN_HISTORY_START_OFFSET = 5L
     }
 }

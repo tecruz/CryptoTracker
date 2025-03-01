@@ -15,6 +15,7 @@ material3-adaptive = "1.0.0"
 compose-material-icons-extended = "1.7.8"
 kover = "0.9.1"
 spotless = "7.0.2"
+detekt = "1.23.8"
 turbine = "1.2.0"
 assertK = "0.28.1"
 
@@ -56,6 +57,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
 compose = [
