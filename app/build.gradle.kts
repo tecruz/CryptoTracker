@@ -57,6 +57,12 @@ android {
     }
 }
 
+spotless {
+    kotlin {
+        ktlint()
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -72,6 +78,8 @@ dependencies {
     implementation(libs.bundles.ktor)
 
     testImplementation(libs.junit)
+    testImplementation(libs.turbine)
+    testImplementation(libs.assertk)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
